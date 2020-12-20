@@ -17,9 +17,4 @@ public class Game_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(new GameView(this));
     }
-
-    public void setupSensorListener(){
-        SensorManager sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        Sensor sensor = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-    }
 }
