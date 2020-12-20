@@ -1,8 +1,10 @@
 package com.teixeira.mathis.project;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.hardware.SensorManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -12,6 +14,12 @@ import androidx.annotation.NonNull;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread thread;
+    private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+    private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+
+    private Player player = new Player(screenWidth/2, screenHeight/2);
+    private Target target = new Target();
+    private int score = 0;
 
     public GameView(Context context){
         super(context);
@@ -47,7 +55,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update(){
-
+        player.update();
+        if(target.checkCollision(player.getX(), player.getY())){
+            score++;
+            target.randomPos();
+        }
     }
 
     public void draw(Canvas canvas){
@@ -55,5 +67,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if(canvas != null){
             canvas.drawColor(Color.CYAN);
         }
+        target.draw(canvas);
+        player.draw(canvas);
     }
 }
