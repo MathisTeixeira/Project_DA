@@ -45,33 +45,36 @@ public class Game_Activity extends Activity implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
+    public void onResume(){
+        super.onResume();
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR){
-            float[] rotationMatrix = new float[16];
-            SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
+        float[] rotationMatrix = new float[16];
+        SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
 
-            float[] remappedRotationMatrix = new float[16];
-            SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, remappedRotationMatrix);
+        float[] remappedRotationMatrix = new float[16];
+        SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, remappedRotationMatrix);
 
-            float[] orientations = new float[3];
-            SensorManager.getOrientation(remappedRotationMatrix, orientations);
+        float[] orientations = new float[3];
+        SensorManager.getOrientation(remappedRotationMatrix, orientations);
 
-            for(int i = 0; i < 3; i++) {
-                orientations[i] = (float)(Math.toDegrees(orientations[i]));
-            }
+        for(int i = 0; i < 3; i++) {
+            orientations[i] = (float)(Math.toDegrees(orientations[i]));
+        }
 
-            if(orientations[0] > angle) {
-                gameView.moveLeft();
-            } else if(orientations[0] < -angle) {
-                gameView.moveRight();
-            }
+        if(orientations[0] > angle) {
+            gameView.moveLeft();
+        } else if(orientations[0] < -angle) {
+            gameView.moveRight();
+        }
 
-            if(orientations[1] > angle) {
-                gameView.moveDown();
-            } else if(orientations[1] < -angle) {
-                gameView.moveUp();
-            }
+        if(orientations[1] > angle) {
+            gameView.moveDown();
+        } else if(orientations[1] < -angle) {
+            gameView.moveUp();
         }
     }
 

@@ -26,7 +26,7 @@ public class Target {
     }
 
     public boolean checkCollision(int playerX, int playerY){
-        return Math.sqrt((playerX - x)) + Math.sqrt((playerY - y)) < Math.sqrt(size);
+        return playerX >= x-size && playerX <= x+size && playerY >= y-size && playerY <= y+size;
     }
 
     public void randomPos(){

@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Chronometer;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
@@ -21,10 +23,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Player player = new Player(screenWidth/2, screenHeight/2);
     private Target target = new Target();
     private int score = 0;
-
+    private Paint scorePaint = new Paint();
+    
     public GameView(Context context){
         super(context);
         getHolder().addCallback(this);
+
+        scorePaint.setColor(Color.BLACK);
+        scorePaint.setTextSize(50);
 
         thread = new GameThread(getHolder(), this);
         setFocusable(true);
@@ -67,9 +73,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         if(canvas != null){
             canvas.drawColor(Color.CYAN);
+            target.draw(canvas);
+            player.draw(canvas);
+            canvas.drawText("Score : " + score, (float)screenWidth/2, 60, scorePaint);
         }
-        target.draw(canvas);
-        player.draw(canvas);
     }
 
     public void moveRight(){
