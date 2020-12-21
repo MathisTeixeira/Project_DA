@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.hardware.SensorManager;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -56,7 +57,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         player.update();
-        if(target.checkCollision(player.getX(), player.getY())){
+        if(target.checkCollision(player.x, player.y)){
             score++;
             target.randomPos();
         }
@@ -69,5 +70,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
         target.draw(canvas);
         player.draw(canvas);
+    }
+
+    public void moveRight(){
+        player.x += player.speed;
+    }
+
+    public void moveLeft(){
+        player.x -= player.speed;
+    }
+
+    public void moveUp(){
+        player.y += player.speed;
+    }
+
+    public void moveDown(){
+        player.y -= player.speed;
     }
 }

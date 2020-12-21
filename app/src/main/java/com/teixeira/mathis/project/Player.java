@@ -6,11 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Player {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
     private int size = 20;
-    private float velocity = 0;
-    private float speed = 10;
+    public float speed = 3;
 
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
@@ -27,7 +26,6 @@ public class Player {
     }
 
     public void update(){
-        x += speed;
         if(x>screenWidth-size){
             x = screenWidth-size;
         }else if(x<size){
@@ -40,11 +38,19 @@ public class Player {
         }
     }
 
-    public int getX(){
-        return x;
+    public void moveLeft(){
+        x -= speed;
     }
 
-    public int getY(){
-        return y;
+    public void moveRight(){
+        x += speed;
+    }
+
+    public void moveUp(){
+        y -= speed;
+    }
+
+    public void moveDown(){
+        y += speed;
     }
 }

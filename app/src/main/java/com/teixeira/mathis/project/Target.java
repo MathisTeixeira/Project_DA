@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Target {
     private int x;
     private int y;
-    private int size = 30;
+    private int size = 80;
 
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
