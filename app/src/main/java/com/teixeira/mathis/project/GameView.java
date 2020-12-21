@@ -24,7 +24,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Target target = new Target();
     private int score = 0;
     private Paint scorePaint = new Paint();
-    
+
     public GameView(Context context){
         super(context);
         getHolder().addCallback(this);
