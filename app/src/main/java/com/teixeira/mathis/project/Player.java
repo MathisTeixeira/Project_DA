@@ -37,20 +37,4 @@ public class Player {
             y = size;
         }
     }
-
-    public void moveLeft(){
-        x -= speed;
-    }
-
-    public void moveRight(){
-        x += speed;
-    }
-
-    public void moveUp(){
-        y -= speed;
-    }
-
-    public void moveDown(){
-        y += speed;
-    }
 }

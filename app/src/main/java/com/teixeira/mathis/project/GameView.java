@@ -1,20 +1,27 @@
 package com.teixeira.mathis.project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Chronometer;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
+
+    private Context context;
 
     private GameThread thread;
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -25,12 +32,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private int score = 0;
     private Paint scorePaint = new Paint();
 
+    private Rect pauseButtonRect = new Rect(10, 10, 80, 80);
+    private Paint pauseButtonPaint = new Paint(Color.LTGRAY);
+
     public GameView(Context context){
         super(context);
+        this.context = context;
         getHolder().addCallback(this);
 
         scorePaint.setColor(Color.BLACK);
         scorePaint.setTextSize(50);
+
+        setOnTouchListener(this);
 
         thread = new GameThread(getHolder(), this);
         setFocusable(true);
@@ -76,6 +89,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             target.draw(canvas);
             player.draw(canvas);
             canvas.drawText("Score : " + score, (float)screenWidth/2, 60, scorePaint);
+            canvas.drawRect(pauseButtonRect, pauseButtonPaint);
         }
     }
 
@@ -93,5 +107,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void moveDown(){
         player.y -= player.speed;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        if(pauseButtonRect.contains((int) event.getX(), (int) event.getY())){
+            save();
+        }
+        return true;
+    }
+
+    public void save(){
+        Intent intent = new Intent(context, Save_Activity.class);
+        Bundle b = new Bundle();
+        b.putInt("score", score);
+        intent.putExtras(b);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
