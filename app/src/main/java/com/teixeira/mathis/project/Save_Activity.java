@@ -30,8 +30,6 @@ public class Save_Activity extends AppCompatActivity {
         EditText eTName = findViewById(R.id.editText);
         name = eTName.getText().toString();
 
-
-
         Intent intent = new Intent(this, Leaderboard_Activity.class);
         startActivity(intent);
     }
