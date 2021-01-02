@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -31,14 +32,12 @@ public class Leaderboard_Activity extends AppCompatActivity {
     public static final String REQUEST_URL = "url";
     public static final String URL_PATH = "https://raw.githubusercontent.com/MathisTeixeira/Project_DA/master/scores.txt";
     public static final String INTENT_FILTER = "filter";
-    public static String SCORES_FILE_PATH = "";
+    public static String SCORES_FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/scores.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-
-        SCORES_FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/scores.txt";
 
         // Check permission
         if (ContextCompat.checkSelfPermission(this,
@@ -155,6 +154,11 @@ public class Leaderboard_Activity extends AppCompatActivity {
         // Create ListView
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(new ArrayAdapter<>(Leaderboard_Activity.this, android.R.layout.simple_list_item_1, list));
+    }
+
+    public void goToMenu(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
 
