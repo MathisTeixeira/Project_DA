@@ -24,4 +24,4 @@ Initially the scores are stored in a file on github, the downloading process tak
 The only sensor used in this application is the orientation sensor. It captures the device orientation in all 3 axis though we are using only 2 of these axis in this app.
 
 ## Group
-Group of 1 : Mathis TEIXEIRA mathis.teixeira1@etu-cyu.fr
+Group of 1 : Mathis TEIXEIRA mathis.teixeira1@cyu.fr
