@@ -14,6 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Main activity of the application
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

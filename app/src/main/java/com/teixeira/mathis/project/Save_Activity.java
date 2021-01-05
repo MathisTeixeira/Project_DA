@@ -14,6 +14,11 @@ import java.io.IOException;
 
 import static com.teixeira.mathis.project.Leaderboard_Activity.SCORES_FILE_PATH;
 
+/**
+ * Save the score of the player
+ * The player needs to write his name to add an entry
+ */
+
 public class Save_Activity extends AppCompatActivity {
 
     private int score = 0;
@@ -24,6 +29,7 @@ public class Save_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
 
+        // The bundle must not be null
         Bundle b = getIntent().getExtras();
         if(b != null)
             score = b.getInt("score");
@@ -33,9 +39,11 @@ public class Save_Activity extends AppCompatActivity {
     }
 
     public void saveScore(View view){
+        // Get the name the player wrote in the edit text component
         EditText eTName = findViewById(R.id.editText);
         name = eTName.getText().toString();
 
+        // Open and write into the file which contains the scores
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(SCORES_FILE_PATH, true));
             writer.write("\n"+name+";;"+score);

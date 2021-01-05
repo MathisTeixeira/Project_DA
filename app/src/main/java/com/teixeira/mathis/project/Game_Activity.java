@@ -26,30 +26,37 @@ public class Game_Activity extends Activity implements SensorEventListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Create the GameView and set it as the content view
         super.onCreate(savedInstanceState);
         gameView = new GameView(this);
         setContentView(gameView);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // Initialize the orientation sensor
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
     }
 
+    // Register sensor on start
     public void onStart(){
         super.onStart();
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
+    // Unregister sensor on pause
     public void onPause(){
         super.onPause();
         sensorManager.unregisterListener(this);
     }
 
+    // Register sensor on resume
     public void onResume(){
         super.onResume();
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
+    // Reorganize sensor's data in a matrix
+    // Function executes every time the sensor changes
     @Override
     public void onSensorChanged(SensorEvent event) {
         float[] rotationMatrix = new float[16];
@@ -65,12 +72,14 @@ public class Game_Activity extends Activity implements SensorEventListener {
             orientations[i] = (float)(Math.toDegrees(orientations[i]));
         }
 
+        // Move on the horizontal axis
         if(orientations[0] > angle) {
             gameView.moveLeft();
         } else if(orientations[0] < -angle) {
             gameView.moveRight();
         }
 
+        // Move on the vertical axis
         if(orientations[1] > angle) {
             gameView.moveDown();
         } else if(orientations[1] < -angle) {

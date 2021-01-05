@@ -5,6 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+/**
+ * Player class
+ */
+
 public class Player {
     public int x;
     public int y;
@@ -19,12 +23,14 @@ public class Player {
         this.y = y;
     }
 
+    // The player is drawn on the canvas as a gray circle
     public void draw(Canvas canvas){
         Paint paint = new Paint();
         paint.setColor(Color.GRAY);
         canvas.drawCircle(x, y, size, paint);
     }
 
+    // Prevent the player from going out of the device's screen
     public void update(){
         if(x>screenWidth-size){
             x = screenWidth-size;

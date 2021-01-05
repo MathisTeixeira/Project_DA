@@ -25,11 +25,17 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Leaderbaord shows best scores
+ * Private class Score is for pratical uses
+ */
+
 public class Leaderboard_Activity extends AppCompatActivity {
 
     public static String TAG = "Leaderboard_Activity";
     public static final int PERMISSIONS_REQUEST = 0;
     public static final String REQUEST_URL = "url";
+    // URL of the score file in the github repository
     public static final String URL_PATH = "https://raw.githubusercontent.com/MathisTeixeira/Project_DA/master/scores.txt";
     public static final String INTENT_FILTER = "filter";
     public static String SCORES_FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/scores.txt";
@@ -110,6 +116,7 @@ public class Leaderboard_Activity extends AppCompatActivity {
         }
     }
 
+    // Download the scores from the given url
     private void downloadScores() {
         Log.d(TAG, "Downloading scores...");
 
@@ -119,10 +126,12 @@ public class Leaderboard_Activity extends AppCompatActivity {
 
     }
 
+    // Parse the data from strings separated with ';;' to Score objects
     private List<Score> parseScores() {
         Log.d(TAG, "Parsing...");
         List<Score> list = new ArrayList<>();
 
+        // Open and read file
         try {
 
             FileReader in = new FileReader(SCORES_FILE_PATH);
@@ -130,6 +139,7 @@ public class Leaderboard_Activity extends AppCompatActivity {
 
             String line;
 
+            // Read the file line by line
             while ((line = br.readLine()) != null && line.contains(";;")) {
                 String[] lineParts = line.split(";;");
                 Log.d(TAG, "Name: "+lineParts[0]+"\nScore: "+lineParts[1]);
@@ -146,6 +156,7 @@ public class Leaderboard_Activity extends AppCompatActivity {
         return list;
     }
 
+    // Convert the parsed list of scores into a list view for the user to see
     private void listScores() {
         Log.d(TAG, "Listing...");
 
@@ -156,12 +167,14 @@ public class Leaderboard_Activity extends AppCompatActivity {
         listView.setAdapter(new ArrayAdapter<>(Leaderboard_Activity.this, android.R.layout.simple_list_item_1, list));
     }
 
+    // A button uses this function to go back to the main menu
     public void goToMenu(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
 
+// This class takes the name and score of a player
 class Score{
     private String name;
     private String score;

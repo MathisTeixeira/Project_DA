@@ -3,6 +3,10 @@ package com.teixeira.mathis.project;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+/**
+ * A custom thread for the game
+ */
+
 public class GameThread extends Thread {
     private SurfaceHolder surfaceHolder;
     private GameView gameView;
@@ -15,11 +19,15 @@ public class GameThread extends Thread {
         this.gameView = gameView;
     }
 
+    // Main function of the thread
     @Override
     public void run() {
         while (running) {
             canvas = null;
 
+            // Lock the canvas to avoid using it in multiple threads at the same time
+            // Then draw and update the canvas
+            // And finally unlock the canvas
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
@@ -40,6 +48,7 @@ public class GameThread extends Thread {
         }
     }
 
+    // Run the thread or stop it
     public void setRunning(boolean isRunning){
         running = isRunning;
     }

@@ -19,6 +19,10 @@ import android.widget.Chronometer;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
+/**
+ * Class responsible of drawing the game and manage the game mechanics
+ */
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
 
     private Context context;
@@ -49,6 +53,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         setFocusable(true);
     }
 
+    // Create the surface we can draw onto
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         thread.setRunning(true);
@@ -60,6 +65,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     }
 
+    // Stop the thread when the surface is destroyed
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
         boolean retry = true;
@@ -74,6 +80,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         }
     }
 
+    // Update every object of the game
+    // Used for the physics (moving and checking collision with target)
     public void update(){
         player.update();
         if(target.checkCollision(player.x, player.y)){
@@ -82,6 +90,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         }
     }
 
+    // Draw on the canvas with updated positions
     public void draw(Canvas canvas){
         super.draw(canvas);
         if(canvas != null){
@@ -93,6 +102,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         }
     }
 
+    // Move the player in every directions
+    // Functions called by GameActivity after getting the data from the sensor
     public void moveRight(){
         player.x += player.speed;
     }
@@ -109,6 +120,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         player.y -= player.speed;
     }
 
+    // If the user touches the screen on the top left corner (ie. the black square on screen, which is the pause button) then executes the save function
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         if(pauseButtonRect.contains((int) event.getX(), (int) event.getY())){
@@ -117,6 +129,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         return true;
     }
 
+    // Send the current score in a bundle to the save activity
     public void save(){
         Intent intent = new Intent(context, Save_Activity.class);
         Bundle b = new Bundle();
